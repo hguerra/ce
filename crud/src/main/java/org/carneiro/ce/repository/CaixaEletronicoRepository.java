@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @since 01/02/17
  */
 public interface CaixaEletronicoRepository extends JpaRepository<CaixaEletronico, Long>{
+	CaixaEletronico findByNome(String nome);
 }
