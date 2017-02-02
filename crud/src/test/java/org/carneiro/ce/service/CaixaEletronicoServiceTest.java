@@ -5,6 +5,10 @@ import org.carneiro.ce.model.impl.CaixaEletronico;
 import org.carneiro.ce.model.impl.Nota;
 import org.carneiro.ce.model.impl.Saque;
 import org.carneiro.ce.repository.SaqueRepository;
+import org.carneiro.ce.service.exception.ArgumentosObrigatoriosException;
+import org.carneiro.ce.service.exception.CadastroExistenteException;
+import org.carneiro.ce.service.exception.NotasInvalidasException;
+import org.carneiro.ce.service.exception.SaldoInvalidoException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -67,6 +71,36 @@ public class CaixaEletronicoServiceTest {
 
 		Assert.assertNotNull(cadastrado);
 		Assert.assertEquals(this.caixaEletronico, cadastrado);
+	}
+
+	@Test(expected = ArgumentosObrigatoriosException.class)
+	public void cadastrarCampoNullErro() throws Exception {
+		this.caixaEletronico.setNome(null);
+		this.caixaEletronicoService.cadastrar(this.caixaEletronico);
+	}
+
+	@Test(expected = SaldoInvalidoException.class)
+	public void cadastrarSaldoInvalidoErro() throws Exception {
+		this.caixaEletronico.setSaldo(-10);
+		this.caixaEletronicoService.cadastrar(this.caixaEletronico);
+	}
+
+	@Test(expected = NotasInvalidasException.class)
+	public void cadastrarSaldoNotasInvalidoErro() throws Exception {
+		this.caixaEletronico.setNotas(Arrays.asList(new Nota(10, 1)));
+		this.caixaEletronicoService.cadastrar(this.caixaEletronico);
+	}
+
+	@Test(expected = CadastroExistenteException.class)
+	public void cadastrarExistenteErro() throws Exception {
+		this.caixaEletronicoService.cadastrar(this.caixaEletronico);
+
+		CaixaEletronico duplidaco = new CaixaEletronico();
+		duplidaco.setNome(this.caixaEletronico.getNome());
+		duplidaco.setSaldo(this.caixaEletronico.getSaldo());
+		duplidaco.setNotas(this.caixaEletronico.getNotas());
+
+		this.caixaEletronicoService.cadastrar(duplidaco);
 	}
 
 	@Test
