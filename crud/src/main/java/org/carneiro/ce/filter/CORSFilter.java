@@ -6,6 +6,10 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * This class was taken from:
+ * http://stackoverflow.com/questions/32319396/cors-with-spring-boot-and-angularjs-not-working
+ */
 @Component
 public class CORSFilter implements Filter {
 

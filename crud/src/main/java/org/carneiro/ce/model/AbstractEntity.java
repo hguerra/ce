@@ -10,7 +10,6 @@ import java.io.Serializable;
 
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable{
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false, updatable = false)
