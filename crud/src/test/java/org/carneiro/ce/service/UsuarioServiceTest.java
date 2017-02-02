@@ -114,19 +114,19 @@ public class UsuarioServiceTest {
 	@Test
 	public void listarSaques() throws Exception {
 		Saque saque = new Saque();
-		saque.setUsuario(usuario.getNome());
+		saque.setUsuario(this.usuario.getNome());
 		saque.setCaixaEletronico("CaixaTest");
 		saque.setData(LocalDateTime.now());
 		saque.setValor(20);
-		saqueRepository.save(saque);
+		this.saqueRepository.save(saque);
 
-		Collection<Saque> byCaixa = saqueRepository.findByCaixaEletronico("CaixaTest");
+		Collection<Saque> encontrados = this.usuarioService.listarSaques(this.usuario.getNome());
 
-		Assert.assertNotNull(byCaixa);
-		Assert.assertEquals(1, byCaixa.size());
+		Assert.assertNotNull(encontrados);
+		Assert.assertEquals(1, encontrados.size());
 
-		saque = byCaixa.stream().findFirst().get();
-		Assert.assertEquals("UsuarioTest", saque.getUsuario());
+		saque = encontrados.stream().findFirst().get();
+		Assert.assertEquals(this.usuario.getNome(), saque.getUsuario());
 		Assert.assertEquals("CaixaTest", saque.getCaixaEletronico());
 	}
 }
