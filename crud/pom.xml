@@ -7,19 +7,14 @@
 	<packaging>war</packaging>
 
 	<name>crud</name>
-	<description>Projeto backend, que fará o cadastro dos clientes e caixas eletrônicos.</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<build.plugins.plugin.version>3.3</build.plugins.plugin.version>
-
 		<spring.version>1.2.7.RELEASE</spring.version>
-		<mockito.version>1.9.0</mockito.version>
 		<postgresql.version>9.4.1207</postgresql.version>
-		<rest-assured.version>2.4.0</rest-assured.version>
-		<slf4j.version>1.7.5</slf4j.version>
 	</properties>
 
 	<dependencies>
@@ -43,33 +38,14 @@
 			<version>${postgresql.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jul-to-slf4j</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-
-		<!-- ## Testes ## -->
-
-		<!-- Spring Tests + JUnit -->
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<version>${mockito.version}</version>
-			<scope>test</scope>
-		</dependency>
+		<!-- Testes -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<version>${spring.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.jayway.restassured</groupId>
-			<artifactId>rest-assured</artifactId>
-			<version>${rest-assured.version}</version>
-		</dependency>
-		
+
 		<!-- Database -->
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -77,7 +53,6 @@
 			<version>1.4.188</version>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -96,5 +71,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
