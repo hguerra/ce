@@ -2,6 +2,9 @@ package org.carneiro.ce.service;
 
 import org.carneiro.ce.Application;
 import org.carneiro.ce.model.impl.*;
+import org.carneiro.ce.repository.CaixaEletronicoRepository;
+import org.carneiro.ce.repository.SaqueRepository;
+import org.carneiro.ce.repository.UsuarioRepository;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,6 +37,15 @@ public class SaqueServiceTest {
 	@Autowired
 	private SaqueService saqueService;
 
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+
+	@Autowired
+	private CaixaEletronicoRepository caixaEletronicoRepository;
+
+	@Autowired
+	private SaqueRepository saqueRepository;
+
 	public void setUsuarioService(UsuarioService usuarioService) {
 		this.usuarioService = usuarioService;
 	}
@@ -46,8 +58,24 @@ public class SaqueServiceTest {
 		this.saqueService = saqueService;
 	}
 
+	public void setUsuarioRepository(UsuarioRepository usuarioRepository) {
+		this.usuarioRepository = usuarioRepository;
+	}
+
+	public void setCaixaEletronicoRepository(CaixaEletronicoRepository caixaEletronicoRepository) {
+		this.caixaEletronicoRepository = caixaEletronicoRepository;
+	}
+
+	public void setSaqueRepository(SaqueRepository saqueRepository) {
+		this.saqueRepository = saqueRepository;
+	}
+
 	@Before
 	public void setUp() throws Exception {
+		this.usuarioRepository.deleteAll();
+		this.caixaEletronicoRepository.deleteAll();
+		this.saqueRepository.deleteAll();
+
 		this.usuario = new Usuario();
 		this.usuario.setNome("UsuarioTest");
 		this.usuario.setSaldo(1000);
@@ -83,11 +111,12 @@ public class SaqueServiceTest {
 
 	@Test
 	public void sacar() throws Exception {
-		Assert.assertTrue(this.saqueService.sacar(transacao));
+		Assert.assertTrue(this.saqueService.sacar(this.transacao));
 	}
 
 	@Test
 	public void buscarUsuarioSaques() throws Exception {
+		this.saqueService.sacar(transacao);
 		Collection<Saque> saques = this.saqueService.buscarUsuarioSaques(transacao.getUsuario());
 		Assert.assertEquals(1, saques.size());
 
@@ -99,6 +128,7 @@ public class SaqueServiceTest {
 
 	@Test
 	public void buscarCaixaEletronicoSaques() throws Exception {
+		this.saqueService.sacar(transacao);
 		Collection<Saque> saques = this.saqueService.buscarCaixaEletronicoSaques(transacao.getCaixaEletronico());
 		Assert.assertEquals(1, saques.size());
 

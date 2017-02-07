@@ -4,6 +4,7 @@ import org.carneiro.ce.Application;
 import org.carneiro.ce.model.impl.CaixaEletronico;
 import org.carneiro.ce.model.impl.Nota;
 import org.carneiro.ce.model.impl.Saque;
+import org.carneiro.ce.repository.CaixaEletronicoRepository;
 import org.carneiro.ce.repository.SaqueRepository;
 import org.carneiro.ce.service.exception.ArgumentosObrigatoriosException;
 import org.carneiro.ce.service.exception.CadastroExistenteException;
@@ -35,10 +36,17 @@ public class CaixaEletronicoServiceTest {
 	private CaixaEletronicoService caixaEletronicoService;
 
 	@Autowired
+	private CaixaEletronicoRepository caixaEletronicoRepository;
+
+	@Autowired
 	private SaqueRepository saqueRepository;
 
 	public void setCaixaEletronicoService(CaixaEletronicoService caixaEletronicoService) {
 		this.caixaEletronicoService = caixaEletronicoService;
+	}
+
+	public void setCaixaEletronicoRepository(CaixaEletronicoRepository caixaEletronicoRepository) {
+		this.caixaEletronicoRepository = caixaEletronicoRepository;
 	}
 
 	public void setSaqueRepository(SaqueRepository saqueRepository) {
@@ -47,6 +55,7 @@ public class CaixaEletronicoServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		this.caixaEletronicoRepository.deleteAll();
 		this.caixaEletronico = new CaixaEletronico();
 		this.caixaEletronico.setNome("CaixaTest");
 		this.caixaEletronico.setSaldo(280);
@@ -124,6 +133,8 @@ public class CaixaEletronicoServiceTest {
 
 	@Test
 	public void listarSaques() throws Exception {
+		this.saqueRepository.deleteAll();
+
 		Saque saque = new Saque();
 		saque.setUsuario("UsuarioTest");
 		saque.setCaixaEletronico(this.caixaEletronico.getNome());

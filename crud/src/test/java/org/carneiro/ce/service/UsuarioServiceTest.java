@@ -4,6 +4,7 @@ import org.carneiro.ce.Application;
 import org.carneiro.ce.model.impl.Saque;
 import org.carneiro.ce.model.impl.Usuario;
 import org.carneiro.ce.repository.SaqueRepository;
+import org.carneiro.ce.repository.UsuarioRepository;
 import org.carneiro.ce.service.exception.ArgumentosObrigatoriosException;
 import org.carneiro.ce.service.exception.CadastroExistenteException;
 import org.carneiro.ce.service.exception.SaldoInvalidoException;
@@ -32,10 +33,17 @@ public class UsuarioServiceTest {
 	private UsuarioService usuarioService;
 
 	@Autowired
+	private UsuarioRepository usuarioRepository;
+
+	@Autowired
 	private SaqueRepository saqueRepository;
 
 	public void setUsuarioService(UsuarioService usuarioService) {
 		this.usuarioService = usuarioService;
+	}
+
+	public void setUsuarioRepository(UsuarioRepository usuarioRepository) {
+		this.usuarioRepository = usuarioRepository;
 	}
 
 	public void setSaqueRepository(SaqueRepository saqueRepository) {
@@ -44,6 +52,7 @@ public class UsuarioServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		this.usuarioRepository.deleteAll();
 		this.usuario = new Usuario();
 		this.usuario.setNome("UsuarioTest");
 		this.usuario.setSaldo(1000);
@@ -113,6 +122,8 @@ public class UsuarioServiceTest {
 
 	@Test
 	public void listarSaques() throws Exception {
+		this.saqueRepository.deleteAll();
+
 		Saque saque = new Saque();
 		saque.setUsuario(this.usuario.getNome());
 		saque.setCaixaEletronico("CaixaTest");

@@ -3,8 +3,8 @@ package org.carneiro.ce.service.impl;
 import org.carneiro.ce.model.impl.CaixaEletronico;
 import org.carneiro.ce.model.impl.Saque;
 import org.carneiro.ce.repository.CaixaEletronicoRepository;
-import org.carneiro.ce.repository.SaqueRepository;
 import org.carneiro.ce.service.CaixaEletronicoService;
+import org.carneiro.ce.service.SaqueService;
 import org.carneiro.ce.service.exception.ArgumentosObrigatoriosException;
 import org.carneiro.ce.service.exception.CadastroExistenteException;
 import org.carneiro.ce.service.exception.NotasInvalidasException;
@@ -24,14 +24,14 @@ public class CaixaEletronicoServiceImpl implements CaixaEletronicoService {
 	private CaixaEletronicoRepository caixaEletronicoRepository;
 
 	@Autowired
-	private SaqueRepository saqueRepository;
+	private SaqueService saqueService;
 
 	public void setCaixaEletronicoRepository(CaixaEletronicoRepository caixaEletronicoRepository) {
 		this.caixaEletronicoRepository = caixaEletronicoRepository;
 	}
 
-	public void setSaqueRepository(SaqueRepository saqueRepository) {
-		this.saqueRepository = saqueRepository;
+	public void setSaqueService(SaqueService saqueService) {
+		this.saqueService = saqueService;
 	}
 
 	@Override
@@ -80,6 +80,6 @@ public class CaixaEletronicoServiceImpl implements CaixaEletronicoService {
 
 	@Override
 	public Collection<Saque> listarSaques(String nome) {
-		return this.saqueRepository.findByCaixaEletronico(nome);
+		return this.saqueService.buscarCaixaEletronicoSaques(nome);
 	}
 }

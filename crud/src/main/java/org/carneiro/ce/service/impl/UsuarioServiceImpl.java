@@ -2,8 +2,8 @@ package org.carneiro.ce.service.impl;
 
 import org.carneiro.ce.model.impl.Saque;
 import org.carneiro.ce.model.impl.Usuario;
-import org.carneiro.ce.repository.SaqueRepository;
 import org.carneiro.ce.repository.UsuarioRepository;
+import org.carneiro.ce.service.SaqueService;
 import org.carneiro.ce.service.UsuarioService;
 import org.carneiro.ce.service.exception.ArgumentosObrigatoriosException;
 import org.carneiro.ce.service.exception.CadastroExistenteException;
@@ -23,14 +23,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 	private UsuarioRepository usuarioRepository;
 
 	@Autowired
-	private SaqueRepository saqueRepository;
+	private SaqueService saqueService;
 
 	public void setUsuarioRepository(UsuarioRepository usuarioRepository) {
 		this.usuarioRepository = usuarioRepository;
 	}
 
-	public void setSaqueRepository(SaqueRepository saqueRepository) {
-		this.saqueRepository = saqueRepository;
+	public void setSaqueService(SaqueService saqueService) {
+		this.saqueService = saqueService;
 	}
 
 	@Override
@@ -74,6 +74,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public Collection<Saque> listarSaques(String nome) {
-		return this.saqueRepository.findByUsuario(nome);
+		return this.saqueService.buscarUsuarioSaques(nome);
 	}
 }
