@@ -1,8 +1,4 @@
-package org.carneiro.ce.model;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
+package org.carneiro.ce.model.impl;
 
 import java.util.Collection;
 
@@ -10,7 +6,7 @@ import java.util.Collection;
  * @author heitor
  * @since 02/02/17
  */
-public class Saque {
+public class Transacao {
 	private String usuario;
 	private String caixaEletronico;
 	private Integer usuarioSaldo;
@@ -71,9 +67,9 @@ public class Saque {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		Saque saque = (Saque) o;
+		Transacao Transacao = (Transacao) o;
 
-		return usuario.equals(saque.usuario) && caixaEletronico.equals(saque.caixaEletronico) && usuarioSaldo.equals(saque.usuarioSaldo) && caixaEletronicoSaldo.equals(saque.caixaEletronicoSaldo) && valor.equals(saque.valor) && notas.equals(saque.notas);
+		return usuario.equals(Transacao.usuario) && caixaEletronico.equals(Transacao.caixaEletronico) && usuarioSaldo.equals(Transacao.usuarioSaldo) && caixaEletronicoSaldo.equals(Transacao.caixaEletronicoSaldo) && valor.equals(Transacao.valor) && notas.equals(Transacao.notas);
 	}
 
 	@Override
@@ -85,15 +81,5 @@ public class Saque {
 		result = 31 * result + valor.hashCode();
 		result = 31 * result + notas.hashCode();
 		return result;
-	}
-
-	@Override
-	public String toString() {
-		try {
-			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-			return ow.writeValueAsString(this);
-		} catch (JsonProcessingException e) {
-			return super.toString();
-		}
 	}
 }
