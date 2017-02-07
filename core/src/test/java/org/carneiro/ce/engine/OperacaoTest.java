@@ -3,7 +3,7 @@ package org.carneiro.ce.engine;
 import org.carneiro.ce.engine.exception.NotasInsuficientesException;
 import org.carneiro.ce.engine.exception.SaldoInsuficienteException;
 import org.carneiro.ce.model.Nota;
-import org.carneiro.ce.model.Saque;
+import org.carneiro.ce.model.Transacao;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -20,12 +20,12 @@ import java.util.stream.Collectors;
  */
 public class OperacaoTest {
 	private Operacao operacao;
-	private Saque requisicao;
+	private Transacao requisicao;
 
 	@Before
 	public void setUp() throws Exception {
 		this.operacao = new OperacaoSaque();
-		this.requisicao = new Saque();
+		this.requisicao = new Transacao();
 		this.requisicao.setUsuario("UsuarioTest");
 		this.requisicao.setCaixaEletronico("CaixaTest");
 
@@ -44,7 +44,7 @@ public class OperacaoTest {
 				new Nota(20, 10), new Nota(50, 10), new Nota(100, 10)));
 
 		this.requisicao.setValor(0);
-		Saque resposta = operacao.calcular(requisicao);
+		Transacao resposta = operacao.calcular(requisicao);
 
 		Assert.assertNotNull(resposta);
 		Assert.assertEquals(this.requisicao.getUsuarioSaldo(), resposta.getUsuarioSaldo());
@@ -63,7 +63,7 @@ public class OperacaoTest {
 				new Nota(20, 10), new Nota(50, 10), new Nota(100, 10)));
 
 		this.requisicao.setValor(200);
-		Saque resposta = operacao.calcular(requisicao);
+		Transacao resposta = operacao.calcular(requisicao);
 
 		Assert.assertNotNull(resposta);
 		Assert.assertEquals(new Integer(1800), resposta.getUsuarioSaldo());
@@ -82,7 +82,7 @@ public class OperacaoTest {
 				new Nota(20, 10), new Nota(50, 10), new Nota(100, 10)));
 
 		this.requisicao.setValor(550);
-		Saque resposta = operacao.calcular(requisicao);
+		Transacao resposta = operacao.calcular(requisicao);
 
 		Assert.assertNotNull(resposta);
 		Assert.assertEquals(new Integer(1450), resposta.getUsuarioSaldo());
@@ -127,7 +127,7 @@ public class OperacaoTest {
 				new Nota(20, 0), new Nota(50, 10), new Nota(100, 10)));
 
 		this.requisicao.setValor(80);
-		Saque resposta = operacao.calcular(requisicao);
+		Transacao resposta = operacao.calcular(requisicao);
 
 		Assert.assertNotNull(resposta);
 		Assert.assertEquals(new Integer(1920), resposta.getUsuarioSaldo());
@@ -168,12 +168,12 @@ public class OperacaoTest {
 		operacao.calcular(requisicao);
 	}
 
-	private static void setCaixaEletronicoSaldo(Saque saque, Collection<Nota> notas) {
-		saque.setNotas(notas);
-		saque.setCaixaEletronicoSaldo(notas.stream().mapToInt(n -> n.getNota() * n.getQuantidade()).sum());
+	private static void setCaixaEletronicoSaldo(Transacao transacao, Collection<Nota> notas) {
+		transacao.setNotas(notas);
+		transacao.setCaixaEletronicoSaldo(notas.stream().mapToInt(n -> n.getNota() * n.getQuantidade()).sum());
 	}
 
-	private static Map<Integer, Integer> getMapNotas(Saque saque) {
-		return saque.getNotas().stream().collect(Collectors.toMap(Nota::getNota, Nota::getQuantidade));
+	private static Map<Integer, Integer> getMapNotas(Transacao transacao) {
+		return transacao.getNotas().stream().collect(Collectors.toMap(Nota::getNota, Nota::getQuantidade));
 	}
 }

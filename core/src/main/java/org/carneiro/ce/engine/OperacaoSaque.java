@@ -4,7 +4,7 @@ import org.carneiro.ce.engine.exception.NotasInsuficientesException;
 import org.carneiro.ce.engine.exception.SaldoInsuficienteException;
 import org.carneiro.ce.engine.exception.ValorInvalidoException;
 import org.carneiro.ce.model.Nota;
-import org.carneiro.ce.model.Saque;
+import org.carneiro.ce.model.Transacao;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,28 +16,28 @@ import java.util.List;
  */
 public class OperacaoSaque implements Operacao {
 	@Override
-	public Saque calcular(Saque saque) {
-		Integer valor = saque.getValor();
+	public Transacao calcular(Transacao transacao) {
+		Integer valor = transacao.getValor();
 		if (valor % 10 != 0) {
 			throw new ValorInvalidoException();
 		}
 
-		if (valor > saque.getUsuarioSaldo()) {
-			throw new SaldoInsuficienteException(saque.getUsuario(), saque.getUsuarioSaldo(), valor);
+		if (valor > transacao.getUsuarioSaldo()) {
+			throw new SaldoInsuficienteException(transacao.getUsuario(), transacao.getUsuarioSaldo(), valor);
 		}
 
-		if (valor > saque.getCaixaEletronicoSaldo()) {
-			throw new SaldoInsuficienteException(saque.getCaixaEletronico(), saque.getCaixaEletronicoSaldo(), valor);
+		if (valor > transacao.getCaixaEletronicoSaldo()) {
+			throw new SaldoInsuficienteException(transacao.getCaixaEletronico(), transacao.getCaixaEletronicoSaldo(), valor);
 		}
 
-		List<Nota> notas = new ArrayList<>(saque.getNotas());
+		List<Nota> notas = new ArrayList<>(transacao.getNotas());
 		Collections.sort(notas);
 
-		Saque resposta = new Saque();
-		resposta.setUsuario(saque.getUsuario());
-		resposta.setUsuarioSaldo(saque.getUsuarioSaldo() - valor);
-		resposta.setCaixaEletronico(saque.getCaixaEletronico());
-		resposta.setCaixaEletronicoSaldo(saque.getCaixaEletronicoSaldo() - valor);
+		Transacao resposta = new Transacao();
+		resposta.setUsuario(transacao.getUsuario());
+		resposta.setUsuarioSaldo(transacao.getUsuarioSaldo() - valor);
+		resposta.setCaixaEletronico(transacao.getCaixaEletronico());
+		resposta.setCaixaEletronicoSaldo(transacao.getCaixaEletronicoSaldo() - valor);
 		resposta.setNotas(new ArrayList<>());
 
 		for (Nota nota: notas) {
@@ -57,7 +57,7 @@ public class OperacaoSaque implements Operacao {
 		}
 
 		if (valor > 0) {
-			throw new NotasInsuficientesException(saque.getCaixaEletronico());
+			throw new NotasInsuficientesException(transacao.getCaixaEletronico());
 		}
 
 		resposta.setValor(valor);

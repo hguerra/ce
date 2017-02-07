@@ -10,7 +10,7 @@ import java.util.Collection;
  * @author heitor
  * @since 02/02/17
  */
-public class Saque {
+public class Transacao {
 	private String usuario;
 	private String caixaEletronico;
 	private Integer usuarioSaldo;
@@ -71,9 +71,9 @@ public class Saque {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		Saque saque = (Saque) o;
+		Transacao transacao = (Transacao) o;
 
-		return usuario.equals(saque.usuario) && caixaEletronico.equals(saque.caixaEletronico) && usuarioSaldo.equals(saque.usuarioSaldo) && caixaEletronicoSaldo.equals(saque.caixaEletronicoSaldo) && valor.equals(saque.valor) && notas.equals(saque.notas);
+		return usuario.equals(transacao.usuario) && caixaEletronico.equals(transacao.caixaEletronico) && usuarioSaldo.equals(transacao.usuarioSaldo) && caixaEletronicoSaldo.equals(transacao.caixaEletronicoSaldo) && valor.equals(transacao.valor) && notas.equals(transacao.notas);
 	}
 
 	@Override
