@@ -10,9 +10,11 @@ import java.util.Collection;
  * @author heitor
  * @since 02/02/17
  */
-public class Transacao {
+public class Saque {
 	private String usuario;
 	private String caixaEletronico;
+	private Integer usuarioSaldo;
+	private Integer caixaEletronicoSaldo;
 	private Integer valor;
 	private Collection<Nota> notas;
 
@@ -48,20 +50,38 @@ public class Transacao {
 		this.notas = notas;
 	}
 
+	public Integer getUsuarioSaldo() {
+		return usuarioSaldo;
+	}
+
+	public void setUsuarioSaldo(Integer usuarioSaldo) {
+		this.usuarioSaldo = usuarioSaldo;
+	}
+
+	public Integer getCaixaEletronicoSaldo() {
+		return caixaEletronicoSaldo;
+	}
+
+	public void setCaixaEletronicoSaldo(Integer caixaEletronicoSaldo) {
+		this.caixaEletronicoSaldo = caixaEletronicoSaldo;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		Transacao transacao = (Transacao) o;
+		Saque saque = (Saque) o;
 
-		return usuario.equals(transacao.usuario) && caixaEletronico.equals(transacao.caixaEletronico) && valor.equals(transacao.valor) && notas.equals(transacao.notas);
+		return usuario.equals(saque.usuario) && caixaEletronico.equals(saque.caixaEletronico) && usuarioSaldo.equals(saque.usuarioSaldo) && caixaEletronicoSaldo.equals(saque.caixaEletronicoSaldo) && valor.equals(saque.valor) && notas.equals(saque.notas);
 	}
 
 	@Override
 	public int hashCode() {
 		int result = usuario.hashCode();
 		result = 31 * result + caixaEletronico.hashCode();
+		result = 31 * result + usuarioSaldo.hashCode();
+		result = 31 * result + caixaEletronicoSaldo.hashCode();
 		result = 31 * result + valor.hashCode();
 		result = 31 * result + notas.hashCode();
 		return result;

@@ -5,7 +5,7 @@ package org.carneiro.ce.model;
  * @author heitor
  * @since 02/02/17
  */
-public class Nota {
+public class Nota implements Comparable<Nota> {
 	private Integer nota;
 	private Integer quantidade;
 
@@ -48,5 +48,18 @@ public class Nota {
 		int result = nota.hashCode();
 		result = 31 * result + quantidade.hashCode();
 		return result;
+	}
+
+	@Override
+	public int compareTo(Nota ob) {
+		if (this.getNota() < ob.getNota()) {
+			return 1;
+		}
+
+		if (this.getNota() > ob.getNota()) {
+			return -1;
+		}
+
+		return 0;
 	}
 }
