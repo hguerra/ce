@@ -21,7 +21,7 @@ public class CaixaEletronicoTest {
 		this.caixaEletronico.setSaldo(180);
 
 		this.caixaEletronico.setNotas(Arrays.asList(new Nota(10, 1), new Nota(20, 1),
-				new Nota(50, 1), new Nota(100, 1)));
+				new Nota(50, 1), new Nota(100, 2)));
 	}
 
 	@After
@@ -57,9 +57,7 @@ public class CaixaEletronicoTest {
 
 		Assert.assertEquals(100, this.caixaEletronico.getNotas().stream().mapToInt(Nota::getNota).max().getAsInt());
 		Assert.assertEquals(10, this.caixaEletronico.getNotas().stream().mapToInt(Nota::getNota).min().getAsInt());
-		Assert.assertEquals(180, this.caixaEletronico.getNotas().stream().mapToInt(Nota::getNota).sum());
-
-		this.caixaEletronico.getNotas().forEach(nota -> Assert.assertEquals(new Integer(1), nota.getQuantidade()));
+		Assert.assertEquals(280, this.caixaEletronico.getNotas().stream().mapToInt(nota -> nota.getQuantidade() * nota.getNota()).sum());
 	}
 
 	@Test
@@ -75,7 +73,7 @@ public class CaixaEletronicoTest {
 		outro.setSaldo(180);
 
 		outro.setNotas(Arrays.asList(new Nota(10, 1), new Nota(20, 1),
-				new Nota(50, 1), new Nota(100, 1)));
+				new Nota(50, 1), new Nota(100, 2)));
 
 		Assert.assertEquals(this.caixaEletronico, outro);
 	}

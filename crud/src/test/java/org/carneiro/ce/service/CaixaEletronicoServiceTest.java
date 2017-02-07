@@ -49,9 +49,9 @@ public class CaixaEletronicoServiceTest {
 	public void setUp() throws Exception {
 		this.caixaEletronico = new CaixaEletronico();
 		this.caixaEletronico.setNome("CaixaTest");
-		this.caixaEletronico.setSaldo(180);
+		this.caixaEletronico.setSaldo(280);
 		this.caixaEletronico.setNotas(Arrays.asList(new Nota(10, 1), new Nota(20, 1),
-				new Nota(50, 1), new Nota(100, 1)));
+				new Nota(50, 1), new Nota(100, 2)));
 	}
 
 	@After

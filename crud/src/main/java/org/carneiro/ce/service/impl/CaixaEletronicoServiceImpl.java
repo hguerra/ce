@@ -1,7 +1,6 @@
 package org.carneiro.ce.service.impl;
 
 import org.carneiro.ce.model.impl.CaixaEletronico;
-import org.carneiro.ce.model.impl.Nota;
 import org.carneiro.ce.model.impl.Saque;
 import org.carneiro.ce.repository.CaixaEletronicoRepository;
 import org.carneiro.ce.repository.SaqueRepository;
@@ -45,7 +44,7 @@ public class CaixaEletronicoServiceImpl implements CaixaEletronicoService {
 			throw new SaldoInvalidoException(caixaEletronico.getSaldo());
 		}
 
-		Integer saldoNotas = caixaEletronico.getNotas().stream().mapToInt(Nota::getNota).sum();
+		Integer saldoNotas = caixaEletronico.getNotas().stream().mapToInt(nota -> nota.getNota() * nota.getQuantidade()).sum();
 		if (!saldoNotas.equals(caixaEletronico.getSaldo())) {
 			throw new NotasInvalidasException(saldoNotas, caixaEletronico.getSaldo());
 		}
