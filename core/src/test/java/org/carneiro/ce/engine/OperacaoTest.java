@@ -2,6 +2,7 @@ package org.carneiro.ce.engine;
 
 import org.carneiro.ce.engine.exception.NotasInsuficientesException;
 import org.carneiro.ce.engine.exception.SaldoInsuficienteException;
+import org.carneiro.ce.engine.exception.ValorInvalidoException;
 import org.carneiro.ce.model.Nota;
 import org.carneiro.ce.model.Transacao;
 import org.junit.After;
@@ -68,6 +69,7 @@ public class OperacaoTest {
 		Assert.assertNotNull(resposta);
 		Assert.assertEquals(new Integer(1800), resposta.getUsuarioSaldo());
 		Assert.assertEquals(new Integer(1600), resposta.getCaixaEletronicoSaldo());
+		Assert.assertEquals(new Integer(200), resposta.getValor());
 
 		Map<Integer, Integer> notas = getMapNotas(resposta);
 		Assert.assertEquals(new Integer(8), notas.get(100));
@@ -138,6 +140,15 @@ public class OperacaoTest {
 		Assert.assertEquals(new Integer(9), notas.get(50));
 		Assert.assertEquals(new Integer(0), notas.get(20));
 		Assert.assertEquals(new Integer(7), notas.get(10));
+	}
+
+	@Test(expected = ValorInvalidoException.class)
+	public void calcularSaqueValorInvalido() throws Exception {
+		setCaixaEletronicoSaldo(this.requisicao, Arrays.asList(new Nota(10, 10),
+				new Nota(20, 10), new Nota(50, 10), new Nota(100, 10)));
+
+		this.requisicao.setValor(33);
+		operacao.calcular(requisicao);
 	}
 
 	@Test(expected = NotasInsuficientesException.class)

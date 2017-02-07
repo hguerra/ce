@@ -60,7 +60,7 @@ public class OperacaoSaque implements Operacao {
 			throw new NotasInsuficientesException(transacao.getCaixaEletronico());
 		}
 
-		resposta.setValor(valor);
+		resposta.setValor(transacao.getValor());
 		return resposta;
 	}
 }
