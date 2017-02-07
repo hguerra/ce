@@ -10,7 +10,7 @@ import java.util.Collection;
  * @since 07/02/17
  */
 public interface SaqueService {
-	boolean sacar(Transacao transacao);
+	Saque sacar(Transacao transacao);
 
 	Collection<Saque> buscarUsuarioSaques(String usuario);
 

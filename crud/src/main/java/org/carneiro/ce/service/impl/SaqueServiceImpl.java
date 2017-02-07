@@ -8,6 +8,7 @@ import org.carneiro.ce.repository.CaixaEletronicoRepository;
 import org.carneiro.ce.repository.SaqueRepository;
 import org.carneiro.ce.repository.UsuarioRepository;
 import org.carneiro.ce.service.SaqueService;
+import org.carneiro.ce.service.exception.TransacaoInvalidaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,12 +43,12 @@ public class SaqueServiceImpl implements SaqueService{
 	}
 
 	@Override
-	public boolean sacar(Transacao transacao) {
+	public Saque sacar(Transacao transacao) {
 		Usuario usuario = this.usuarioRepository.findByNome(transacao.getUsuario());
 		CaixaEletronico caixaEletronico = this.caixaEletronicoRepository.findByNome(transacao.getCaixaEletronico());
 
 		if (usuario == null || caixaEletronico == null) {
-			return false;
+			throw new TransacaoInvalidaException();
 		}
 
 		usuario.setSaldo(transacao.getUsuarioSaldo());
@@ -62,8 +63,7 @@ public class SaqueServiceImpl implements SaqueService{
 
 		this.usuarioRepository.save(usuario);
 		this.caixaEletronicoRepository.save(caixaEletronico);
-		this.saqueRepository.save(saque);
-		return true;
+		return this.saqueRepository.save(saque);
 	}
 
 	@Override

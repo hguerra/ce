@@ -2,7 +2,9 @@ package org.carneiro.ce.controller;
 
 import org.carneiro.ce.model.impl.CaixaEletronico;
 import org.carneiro.ce.model.impl.Saque;
+import org.carneiro.ce.model.impl.Transacao;
 import org.carneiro.ce.service.CaixaEletronicoService;
+import org.carneiro.ce.service.SaqueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +25,15 @@ public class CaixaEletronicoController {
 	@Autowired
 	private CaixaEletronicoService caixaEletronicoService;
 
+	@Autowired
+	private SaqueService saqueService;
+
 	public void setCaixaEletronicoService(CaixaEletronicoService caixaEletronicoService) {
 		this.caixaEletronicoService = caixaEletronicoService;
+	}
+
+	public void setSaqueService(SaqueService saqueService) {
+		this.saqueService = saqueService;
 	}
 
 	@RequestMapping(value = {"/", ""}, method = POST, produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
@@ -49,5 +58,11 @@ public class CaixaEletronicoController {
 	@ResponseBody
 	public Collection<Saque> listarSaques(@PathVariable String nome) {
 		return this.caixaEletronicoService.listarSaques(nome);
+	}
+
+	@RequestMapping(value = {"/saque", ""}, method = POST, produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Saque sacar(@Valid @RequestBody Transacao transacao) {
+		return this.saqueService.sacar(transacao);
 	}
 }

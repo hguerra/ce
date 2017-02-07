@@ -5,6 +5,7 @@ import org.carneiro.ce.model.impl.*;
 import org.carneiro.ce.repository.CaixaEletronicoRepository;
 import org.carneiro.ce.repository.SaqueRepository;
 import org.carneiro.ce.repository.UsuarioRepository;
+import org.carneiro.ce.service.exception.TransacaoInvalidaException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -111,7 +112,18 @@ public class SaqueServiceTest {
 
 	@Test
 	public void sacar() throws Exception {
-		Assert.assertTrue(this.saqueService.sacar(this.transacao));
+		Saque saque = this.saqueService.sacar(this.transacao);
+
+		Assert.assertNotNull(saque);
+		Assert.assertNotNull(saque.getId());
+		Assert.assertEquals(this.usuario.getNome(), saque.getUsuario());
+		Assert.assertEquals(this.caixaEletronico.getNome(), saque.getCaixaEletronico());
+	}
+
+	@Test(expected = TransacaoInvalidaException.class)
+	public void sacarTransacaoInvalida() throws Exception {
+		this.transacao.setUsuario("UsuarioNaoExistente");
+		this.saqueService.sacar(this.transacao);
 	}
 
 	@Test
