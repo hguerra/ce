@@ -21,7 +21,7 @@ public class CaixaEletronico extends AbstractEntity {
 	@Min(value = 10)
 	private Integer saldo;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Collection<Nota> notas;
 
 	public String getNome() {
