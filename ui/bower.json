@@ -1,0 +1,23 @@
+{
+  "name": "ui",
+  "description": "Frontend projeto caixa eletronico",
+  "main": "gulpfile.js",
+  "authors": [
+    "Heitor Guerra Carneiro"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/hguerra/ce",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "src/vendor",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "angular": "^1.6.2"
+  }
+}
